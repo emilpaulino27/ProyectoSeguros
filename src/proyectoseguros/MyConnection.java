@@ -22,7 +22,7 @@ public class MyConnection {
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_seguromedico", "root", "27092005Emil");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto_seguromedico", "root", "yli12345");
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.getMessage());
         }
