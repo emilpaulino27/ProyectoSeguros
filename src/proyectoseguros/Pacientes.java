@@ -5,17 +5,35 @@
  */
 package proyectoseguros;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Emil Paulino
  */
 public class Pacientes extends javax.swing.JFrame {
+    DefaultTableModel tbl;
 
     /**
      * Creates new form Pacientes
      */
     public Pacientes() {
         initComponents();
+            this.tbl = (DefaultTableModel) tbl_p.getModel();
+                Mostrardatos("");
+                getlastid();
+                ConsultarSeguro(lbl_seguro);
+                ConsultarMedico(lbl_medico);
+
     }
 
     /**
@@ -27,21 +45,438 @@ public class Pacientes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel7 = new javax.swing.JLabel();
+        lbl_edadpac1 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        lbl_nombrepac = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_apellidopac = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        lbl_cedulapac = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        lbl_noseguro = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lbl_historial = new javax.swing.JTextPane();
+        lbl_seguro = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        lbl_edadpac2 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        lbl_medico = new javax.swing.JComboBox<>();
+        btn_insertar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txt_id = new javax.swing.JLabel();
+        btn_reporte = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl_p = new javax.swing.JTable();
+
+        jLabel7.setText("Edad:");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setText("Nombre:");
+
+        jLabel4.setText("Apellido:");
+
+        jLabel5.setText("Cédula:");
+
+        jLabel6.setText("Edad:");
+
+        jLabel8.setText("Historial:");
+
+        jScrollPane1.setViewportView(lbl_historial);
+
+        jLabel9.setText("Seguro:");
+
+        jLabel10.setText("Seguro NO.:");
+
+        jLabel11.setText("Médico: ");
+
+        btn_insertar.setText("Insertar");
+        btn_insertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_insertarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("ID Paciente:");
+
+        txt_id.setText("ID");
+
+        btn_reporte.setText("Reporte");
+        btn_reporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reporteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lbl_edadpac2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lbl_cedulapac, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(72, 72, 72)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lbl_nombrepac, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(11, 11, 11)
+                                        .addComponent(lbl_seguro, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_id)))
+                        .addGap(100, 100, 100)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel10))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbl_noseguro, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbl_apellidopac, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel11)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lbl_medico, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(btn_insertar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_reporte)))
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_id))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(lbl_nombrepac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_cedulapac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(lbl_edadpac2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_seguro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(22, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_apellidopac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_noseguro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(lbl_medico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_insertar)
+                            .addComponent(btn_reporte))
+                        .addGap(22, 22, 22))))
+        );
+
+        jLabel3.setText("PACIENTES");
+
+        tbl_p.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tbl_p);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(420, 420, 420)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 618, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 398, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void getlastid() {
+
+         int lastid;
+        Statement st;
+        ResultSet rs;
+        
+         try{
+            Connection con = MyConnection.getConnection();
+            String sql = "select max(id_paciente) from paciente";
+            st= con.createStatement();
+            
+            rs=st.executeQuery(sql);
+            if(rs.next()){
+                lastid = rs.getInt(1);
+                lastid++;
+                Pacientes.txt_id.setText(Integer.toString(lastid));
+            }
+            else{
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+public void ConsultarSeguro(JComboBox Seguro){
+       String sql = "select * from seguro;";
+       try{
+         
+           MyConnection cn = new MyConnection();
+           Connection con;
+           PreparedStatement ps;
+           ResultSet rs;
+           
+           con = cn.getConnection();
+           ps = con.prepareStatement(sql);
+           rs=ps.executeQuery();
+           while(rs.next()) {
+               Seguro.addItem(rs.getString("nombre"));
+           }
+           
+           
+           
+       } catch (SQLException e){
+           System.out.println(e.toString());
+       }
+   }
+
+public void ConsultarMedico(JComboBox Medico){
+       String sql = "Select CONCAT(nombre, ' ', apellido) As Nombre From medico;";
+       try{
+         
+           MyConnection cn = new MyConnection();
+           Connection con;
+           PreparedStatement ps;
+           ResultSet rs;
+           
+           con = cn.getConnection();
+           ps = con.prepareStatement(sql);
+           rs=ps.executeQuery();
+           while(rs.next()) {
+               Medico.addItem(rs.getString("Nombre"));
+           }
+           
+           
+           
+       } catch (SQLException e){
+           System.out.println(e.toString());
+       }
+   }
+   
+
+    public final void Mostrardatos(String valor){
+           
+            MyConnection cc=new MyConnection();
+            Connection cn=MyConnection.getConnection();
+          
+            tbl.addColumn("ID Paciente");
+            tbl.addColumn("Cedula");
+            tbl.addColumn("Nombre");
+            tbl.addColumn("Apellido");
+            tbl.addColumn("Edad");
+            tbl.addColumn("Historial");
+            tbl.addColumn("Seguro");
+            tbl.addColumn("No. Seguro");
+            tbl.addColumn("Nombre Medico");
+            tbl.addColumn("Apellido Medico");
+
+
+            this.tbl_p.setModel(tbl);
+            String sql;
+            if (valor.equals(""))
+            {
+            sql="SELECT * FROM paciente";
+            }
+            else{
+            sql="SELECT * FROM paciente WHERE nombre='"+valor+"'";
+            } 
+          
+            String []datos=new String [8];
+            try{
+            Statement st=cn.createStatement();
+            ResultSet rs=st.executeQuery(sql);
+            while(rs.next()){
+            datos[0]=rs.getString(1);
+            datos[1]=rs.getString(2);
+            datos[2]=rs.getString(3);
+            datos[3]=rs.getString(4);
+            datos[4]=rs.getString(5);
+            datos[5]=rs.getString(6);
+            datos[6]=rs.getString(7);
+            datos[7]=rs.getString(8);
+
+
+            tbl.addRow(datos);
+            }
+            tbl_p.setModel(tbl);
+
+
+            }catch(SQLException ex){
+            Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE,null,ex);
+            JOptionPane.showMessageDialog(null, "error "+ex);
+            }
+        }
+     
+        
+       
+          public  void LimpiarTabla() {
+              
+               //Limpia la tabla
+              
+        for (int i = 0; i < tbl_p.getRowCount(); i++) {
+            tbl.removeRow(i);
+            i = i - 1;
+        }
+   }
+    public void Limpiar(){
+        try{
+          lbl_cedulapac.setText("");
+         lbl_nombrepac.setText("");
+         lbl_apellidopac.setText("");
+         lbl_edadpac2.setText("");
+         lbl_seguro.setSelectedIndex(0);
+         lbl_noseguro.setText("");
+         lbl_medico.setSelectedIndex(0);
+         lbl_historial.setText("");
+        }
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "error "+ex);
+    }
+    }
+    private void btn_insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_insertarActionPerformed
+        // TODO add your handling code here:
+        
+        String Cedula = lbl_cedulapac.getText();
+        String Nombre = lbl_nombrepac.getText();
+        String Apellido = lbl_apellidopac.getText();
+        String Edad = lbl_edadpac2.getText();
+        String Seguro = (String) lbl_seguro.getSelectedItem();
+        String Noseguro = lbl_noseguro.getText();
+        String Medico = (String) lbl_medico.getSelectedItem();
+        String Historial = lbl_historial.getText();
+         
+        
+        PreparedStatement ps;
+        String query = "INSERT INTO `paciente`(`cedula`,`nombre`,`apellido` ,`edad`,`historial`,`num_seguro`, `nombre_medico`) VALUES (?,?,?,?,?,?,?)";
+        try {
+            ps = MyConnection.getConnection().prepareStatement(query);
+            
+            ps.setString(1, Cedula);
+            ps.setString(2, Nombre);
+            ps.setString(3, Apellido);
+            ps.setString(4, Edad);
+            ps.setString(5, Historial);
+            ps.setString(6, Noseguro);
+            ps.setString(7, Medico);            
+
+
+            if(ps.executeUpdate() > 0)
+            {
+                JOptionPane.showMessageDialog(null, "Nuevo Paciente Agregado");
+                
+                 Limpiar();
+                Mostrardatos("");
+                
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error "+ex);
+            }     
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_btn_insertarActionPerformed
+
+    private void btn_reporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_reporteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +514,33 @@ public class Pacientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_insertar;
+    private javax.swing.JButton btn_reporte;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField lbl_apellidopac;
+    private javax.swing.JTextField lbl_cedulapac;
+    private javax.swing.JTextField lbl_edadpac1;
+    private javax.swing.JTextField lbl_edadpac2;
+    private javax.swing.JTextPane lbl_historial;
+    private javax.swing.JComboBox<String> lbl_medico;
+    private javax.swing.JTextField lbl_nombrepac;
+    private javax.swing.JTextField lbl_noseguro;
+    private javax.swing.JComboBox<String> lbl_seguro;
+    private javax.swing.JTable tbl_p;
+    private static javax.swing.JLabel txt_id;
     // End of variables declaration//GEN-END:variables
 }
